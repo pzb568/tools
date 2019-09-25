@@ -1,0 +1,87 @@
+
+#ariaNg
+
+:8300 {  
+root /data/data/com.termux/files/home/AriaNg
+gzip
+}
+
+# 动态网站
+:8500 {
+root /data/data/com.termux/files/home/www
+gzip
+fastcgi / 127.0.0.1:9000 php
+    rewrite {
+        if {path} not_match ^\/wp-admin
+        to {path} {path}/ /index.php?_url={uri}
+      } 
+}
+
+#文件管理器
+
+#:2000 {
+#  filemanager / /sdcard {
+ #     database /data/data/com.termux/files/home/filemanager.db
+#        }
+#	  timeouts none
+#	    gzip
+#	    }
+
+
+#HTTP2 Proxy代理
+
+#https://v2rayinamrk.herokuapp.com:443 {
+#gzip
+#log access.log
+#forwardproxy
+#}
+
+
+
+#反向代理
+
+
+##服务器IP代理
+#:5000 {
+#gzip
+#proxy / https://www.google.com
+#}
+
+
+##域名代理
+#www. {
+#gzip
+#tls /root/xxx.crt /root/xxx.key
+#proxy / http://www.google.com
+#}
+
+
+#caddy自动部署hugo
+
+#https://www.fhrl.tk {
+#tls pengzb886@gmail.com
+#gzip	
+#root /data/data/com.termux/files/home/blog/public
+#git github.com/pzb568/hugo_blog.git {
+#path /data/data/com.termux/files/home/blog
+#then hugo --destination=/data/data/com.termux/files/home/blog/public
+#hook /webhook /data/data/com.termux/files/home/.ssh/id_rsa
+#hook_type github
+#clone_args --recursive
+# pull_args --recurse-submodules
+#	}
+#	hugo
+#}
+
+# WordPress
+:8888 {
+#tls admin@example.com
+root /data/data/com.termux/files/home/wordpress 
+gzip
+fastcgi / 127.0.0.1:9000 php
+    rewrite {
+        if {path} not_match ^\/wp-admin
+        to {path} {path}/ /index.php?_url={uri}
+      } 
+}
+
