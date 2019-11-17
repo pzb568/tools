@@ -74,7 +74,7 @@ fastcgi / 127.0.0.1:9000 php
 #}
 
 # WordPress
-:8888 {
+:8088 {
 #tls admin@example.com
 root /data/data/com.termux/files/home/wordpress 
 gzip
@@ -85,3 +85,14 @@ fastcgi / 127.0.0.1:9000 php
       } 
 }
 
+# typecho
+:8888 {
+#tls admin@example.com
+root /data/data/com.termux/files/home/typecho 
+gzip
+fastcgi / 127.0.0.1:9000 php
+    rewrite  {    
+    if {path} not_has admin
+    to {path} {path}/ /index.php
+ }
+}
